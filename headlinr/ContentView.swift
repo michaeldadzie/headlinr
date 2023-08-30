@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  headlinr
-//
-//  Created by Michael Dadzie on 8/30/23.
-//
-
 import SwiftUI
 
 struct ContentView: View {
