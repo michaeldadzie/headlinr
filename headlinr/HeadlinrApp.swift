@@ -1,10 +1,10 @@
 import SwiftUI
 
 @main
-struct headlinrApp: App {
+struct HeadlinrApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }
