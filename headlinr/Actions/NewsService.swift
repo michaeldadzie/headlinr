@@ -15,7 +15,7 @@ struct NewsServiceImpl: NewsService {
             .receive(on: DispatchQueue.main)
             .mapError {_ in APIError.unknown }
             .flatMap { data, response -> AnyPublisher<NewsModel, APIError> in
-//                print(String(data: data, encoding: .utf8)!)
+                //                print(String(data: data, encoding: .utf8)!)
                 guard let response = response as? HTTPURLResponse else {
                     return Fail(error: APIError.unknown).eraseToAnyPublisher()
                 }
