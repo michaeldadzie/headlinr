@@ -3,14 +3,19 @@ import Foundation
 
 protocol NewsViewModel {
     func getArticles()
+    var isLoading: Bool { get }
 }
 
 class NewsViewModelImpl: ObservableObject, NewsViewModel {
-    
+
     private let service: NewsService
     
     private(set) var articles = [Article]()
     private var cancellables = Set<AnyCancellable>()
+    
+    var isLoading: Bool {
+        state == .loading
+    }
     
     @Published private(set) var state: ResultState = .loading
     
