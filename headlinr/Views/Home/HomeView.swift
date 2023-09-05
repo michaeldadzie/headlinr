@@ -1,9 +1,12 @@
 import SwiftUI
+import WebKit
 
 struct HomeView: View {
     
-    @Environment(\.openURL) var openUrl
+//    @Environment(\.openURL) var openUrl
+    
     @StateObject var viewModel = NewsViewModelImpl(service: NewsServiceImpl())
+    @State private var hasLoadedArticles = false
     
     var body: some View {
         
@@ -15,23 +18,29 @@ struct HomeView: View {
                 default:
                     List(viewModel.isLoading ? Article.dummyData : viewModel.articles) { item in
                         ArticleView(isLoading: viewModel.isLoading, article: item)
-                            .onTapGesture {
-                                load(url: item.url)
-                            }
                     }
                 }
             }
             .navigationTitle("Headlinr")
-            .onAppear(perform: viewModel.getArticles)
+            .onAppear(perform: loadArticlesIfNeeded)
         }
     }
-    
-    func load(url: String?) {
-        guard let link = url,
-              let url = URL(string: link) else { return }
+
+    private func loadArticlesIfNeeded() {
+        guard !hasLoadedArticles else {
+            return
+        }
         
-        openUrl(url)
+        viewModel.getArticles()
+        hasLoadedArticles = true
     }
+    
+//    func load(url: String?) {
+//        guard let link = url,
+//              let url = URL(string: link) else { return }
+//
+//        openUrl(url)
+//    }
     
 }
 
