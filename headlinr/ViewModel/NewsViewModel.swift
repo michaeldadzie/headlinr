@@ -4,7 +4,7 @@ import Foundation
 protocol NewsViewModel {
     func getArticles()
     var isLoading: Bool { get }
-}
+}  
 
 class NewsViewModelImpl: ObservableObject, NewsViewModel {
 

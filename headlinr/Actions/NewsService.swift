@@ -1,7 +1,6 @@
 import Combine
 import Foundation
 
-
 protocol NewsService {
     func request(from endpoint: NewsAPI) -> AnyPublisher<NewsModel, APIError>
 }
