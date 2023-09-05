@@ -20,7 +20,7 @@ struct ErrorView: View {
                 .font(.system(size: 50, weight: .heavy))
                 .padding(.bottom, 2)
             Text ("Ooopss")
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
                 .font(.system(size: 30, weight: .heavy))
                 .padding(.bottom, 2)
             Text(error.localizedDescription)
