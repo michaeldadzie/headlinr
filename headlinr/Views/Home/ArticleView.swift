@@ -1,17 +1,20 @@
 import SwiftUI
 import URLImage
+import WebKit
 
 struct ArticleView: View {
     
     @State var isLoading: Bool
     let article: Article
+    @State private var showWebView = false
     
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(article.title ?? "")
-                    .foregroundColor(.black)
-                    .font(.system(size: 18, weight: .semibold))
+                    /* .foregroundColor(Theme.textColor) color from theme class */
+                    .foregroundColor(.primary)
+                    .font(.system(size: 14, weight: .bold))
                     .lineLimit(3)
                     .truncationMode(.tail)
                 Text(article.source ?? "")
@@ -29,6 +32,8 @@ struct ArticleView: View {
                             .foregroundColor(.gray)
                             .font(.system(size: 10, weight: .bold))
                         Text(article.author ?? "")
+                            .lineLimit(1)
+                            .truncationMode(.tail)
                             .foregroundColor(.gray)
                             .font(.system(size: 12, weight: .bold))
                     } else {
@@ -46,7 +51,7 @@ struct ArticleView: View {
                     image.resizable()
                         .aspectRatio(contentMode: .fill)
                 }
-                .frame(width: 100, height: 100)
+                .frame(width: 110, height: 110)
                 .cornerRadius(10)
             } else {
                 PlaceHolderImageView()
@@ -54,6 +59,16 @@ struct ArticleView: View {
         }
         .redacted(reason: isLoading ? .placeholder : [])
         .allowsHitTesting(!isLoading)
+        .onTapGesture {
+            showWebView.toggle()
+        }
+        .sheet(isPresented: $showWebView) {
+            if let url = URL(string: article.url ?? "") {
+                WKWebViewRepresentable(url: url)
+            } else {
+                //TODO: URL error
+            }
+        }
     }
 }
 
