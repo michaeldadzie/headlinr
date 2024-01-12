@@ -12,7 +12,6 @@ struct ArticleView: View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(article.title ?? "")
-                    /* .foregroundColor(Theme.textColor) color from theme class */
                     .foregroundColor(.primary)
                     .font(.system(size: 14, weight: .bold))
                     .lineLimit(3)
@@ -21,6 +20,7 @@ struct ArticleView: View {
                     .foregroundColor(.gray)
                     .font(.footnote)
                 
+                
                 HStack {
                     if let date = article.date {
                         Text(date.timeAgo())
@@ -28,16 +28,15 @@ struct ArticleView: View {
                             .font(.system(size: 12, weight: .bold))
                     }
                     if article.author != nil {
-                        Text("|")
+                        /*Text("|")
                             .foregroundColor(.gray)
                             .font(.system(size: 10, weight: .bold))
+                         */
                         Text(article.author ?? "")
                             .lineLimit(1)
                             .truncationMode(.tail)
                             .foregroundColor(.gray)
                             .font(.system(size: 12, weight: .bold))
-                    } else {
-                        //
                     }
                 }
             }
@@ -59,22 +58,10 @@ struct ArticleView: View {
         }
         .redacted(reason: isLoading ? .placeholder : [])
         .allowsHitTesting(!isLoading)
-        .onTapGesture {
-            showWebView.toggle()
-        }
-        .sheet(isPresented: $showWebView) {
-            if let url = URL(string: article.url ?? "") {
-                WKWebViewRepresentable(url: url)
-            } else {
-                //TODO: URL error
-            }
-        }
     }
 }
 
-struct ArticleView_Previews: PreviewProvider {
-    static var previews: some View {
-        ArticleView(isLoading: false, article: Article.dummyData.first!)
-            .previewLayout(.sizeThatFits)
-    }
+#Preview {
+    ArticleView(isLoading: false, article: Article.dummyData.first!)
+    .previewLayout(.sizeThatFits)
 }
