@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct SettingsView: View {
-    
     @Binding var darkModeEnabled: Bool
     @Binding var systemThemeEnabled: Bool
     
@@ -37,8 +36,6 @@ struct SettingsView: View {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView(darkModeEnabled: .constant(false), systemThemeEnabled: .constant(false))
-    }
+#Preview {
+    SettingsView(darkModeEnabled: .constant(false), systemThemeEnabled: .constant(false))
 }

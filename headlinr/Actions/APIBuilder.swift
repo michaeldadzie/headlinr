@@ -21,7 +21,10 @@ extension NewsAPI: APIBuilder {
     }
     
     var path: String {
-        return "/news"
+        switch self {
+        case .getArticles:
+            return "/news"
+        }
     }
     
     var urlRequest: URLRequest {

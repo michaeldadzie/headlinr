@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     @AppStorage("darkModeEnabled") private var darkModeEnabled = false
     @AppStorage("systemThemeEnabled") private var systemThemeEnabled = false
     
@@ -24,8 +23,6 @@ struct ContentView: View {
     }
 }
 
-struct TabView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
 }

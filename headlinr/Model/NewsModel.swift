@@ -4,7 +4,7 @@ struct NewsModel: Codable {
     let articles: [Article]
 }
 
-struct Article: Codable, Identifiable, Equatable {
+struct Article: Codable, Identifiable, Equatable, Hashable {
     var id = UUID()
     let author: String?
     let url: String?
