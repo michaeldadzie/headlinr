@@ -2,14 +2,11 @@ import SwiftUI
 import WebKit
 
 struct HomeView: View {
-    
-//    @Environment(\.openURL) var openUrl
-    
+    @Environment(\.horizontalSizeClass) var sizeClass
     @StateObject var viewModel = NewsViewModelImpl(service: NewsServiceImpl())
     @State private var hasLoadedArticles = false
     
     var body: some View {
-        
         NavigationView {
             Group {
                 switch viewModel.state {
@@ -17,15 +14,22 @@ struct HomeView: View {
                     ErrorView(error: error, handler: viewModel.getArticles)
                 default:
                     List(viewModel.isLoading ? Article.dummyData : viewModel.articles) { item in
-                        ArticleView(isLoading: viewModel.isLoading, article: item)
+                        NavigationLink(destination: ArticleDetailView(article: item)) {
+                            ArticleView(isLoading: viewModel.isLoading, article: item)
+                        }
+                    }
+                    if sizeClass == .regular {
+                        ArticleDetailView(article: viewModel.isLoading ? Article.dummyData.first! : viewModel.articles.first!)
                     }
                 }
             }
             .navigationTitle("Headlinr")
-            .onAppear(perform: loadArticlesIfNeeded)
+            .task {
+                loadArticlesIfNeeded()
+            }
         }
     }
-
+    
     private func loadArticlesIfNeeded() {
         guard !hasLoadedArticles else {
             return
@@ -34,18 +38,8 @@ struct HomeView: View {
         viewModel.getArticles()
         hasLoadedArticles = true
     }
-    
-//    func load(url: String?) {
-//        guard let link = url,
-//              let url = URL(string: link) else { return }
-//
-//        openUrl(url)
-//    }
-    
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-    }
+#Preview {
+    HomeView()
 }
